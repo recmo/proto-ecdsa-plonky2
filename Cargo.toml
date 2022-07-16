@@ -1,0 +1,47 @@
+[package]
+name = "ecdsa-plonky2"
+version = "0.1.0"
+edition = "2021"
+description = "Benchmark proving ECDSA signatures in Plonky2"
+
+[features]
+default = []
+bench = [ "criterion", "proptest" ]
+
+[[bench]]
+name = "criterion"
+harness = false
+path = "criterion.rs"
+required-features = [ "bench", "proptest" ]
+
+[dependencies]
+eyre = "0.6"
+cli-batteries = { version = "0.2.1", features = [ "prometheus", "metered-allocator", "otlp" ] }
+clap = { version = "3.2", features = [ "derive" ] }
+thiserror = "1.0"
+tracing = "0.1"
+plonky2 = { git = "https://github.com/mir-protocol/plonky2", branch = "main" }
+plonky2_ecdsa = { git = "https://github.com/mir-protocol/plonky2", branch = "main" }
+
+# Build dependencies required for `cargo criterion`, so really more `dev-deps`.
+proptest = { version = "1.0", optional = true }
+criterion = { version = "0.3", optional = true, features = [ "async_tokio" ] }
+
+[dev-dependencies]
+proptest = { version = "1.0" }
+tempfile = "3.0"
+
+[build-dependencies]
+cli-batteries = "0.2"
+
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"
+overflow-checks = true
+
+# Compilation profile for any non-workspace member.
+# Dependencies are optimized, even in a dev build. This improves dev performance
+# while having neglible impact on incremental build times.
+[profile.dev.package."*"]
+opt-level = 3
