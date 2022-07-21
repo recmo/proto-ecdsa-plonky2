@@ -38,10 +38,20 @@ cli-batteries = "0.2"
 codegen-units = 1
 lto = true
 panic = "abort"
-overflow-checks = true
+overflow-checks = false
 
 # Compilation profile for any non-workspace member.
 # Dependencies are optimized, even in a dev build. This improves dev performance
 # while having neglible impact on incremental build times.
 [profile.dev.package."*"]
 opt-level = 3
+
+[patch.crates-io]
+cli-batteries = { git = "https://github.com/recmo/cli-batteries", branch = "flame" }
+
+[patch."https://github.com/mir-protocol/plonky2"]
+plonky2 = { git = "https://github.com/recmo/plonky2", branch = "ecda-bench" }
+plonky2_util = { git = "https://github.com/recmo/plonky2", branch = "ecda-bench" }
+plonky2_field = { git = "https://github.com/recmo/plonky2", branch = "ecda-bench" }
+plonky2_ecdsa = { git = "https://github.com/recmo/plonky2", branch = "ecda-bench" }
+
