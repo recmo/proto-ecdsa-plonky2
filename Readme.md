@@ -1,5 +1,5 @@
 # ZKP ECDSA aggregation
 
-
-<https://github.com/mir-protocol/plonky2/tree/main/ecdsa/src>
-
+```
+cargo run --release -- -vvv --log-format compact --size 4
+```

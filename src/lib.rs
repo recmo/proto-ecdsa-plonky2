@@ -19,7 +19,7 @@ use tracing::instrument;
 #[derive(Clone, Debug, Parser)]
 pub struct Options {
     /// The number of signatures in the batch.
-    #[clap(long, default_value = "10")]
+    #[clap(long, default_value = "4")]
     pub size: usize,
 }
 
